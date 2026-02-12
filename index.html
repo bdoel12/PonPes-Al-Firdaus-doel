@@ -1,0 +1,534 @@
+<!doctype html>
+<html lang="id">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ponpes Al-Firdaus - Mencetak Generasi Qur'ani</title>
+    <meta name="description" content="Pondok Pesantren Modern berbasis Salafiyah dan Teknologi." />
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-green: #0F5132;
+            --light-green: #198754;
+            --accent-gold: #D4AF37;
+            --text-main: #333333;
+            --text-muted: #6c757d;
+            --bg-body: #ffffff;
+            --bg-light: #f8f9fa;
+            --bg-card: #ffffff;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-main);
+            background-color: var(--bg-body);
+            transition: all 0.4s ease;
+            overflow-x: hidden;
+            padding-top: 76px; /* Kompensasi navbar fixed */
+        }
+
+        h1, h2, h3, h4, .arabic-font { font-family: 'Amiri', serif; }
+
+        /* --- NAVBAR UPDATE --- */
+        .navbar { 
+            background-color: var(--primary-green); 
+            padding: 1rem 0; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+        }
+        
+        .navbar.scrolled { 
+            padding: 0.6rem 0; 
+        }
+
+        /* Tulisan Menu jadi Putih */
+        .navbar-brand { 
+            font-weight: 700; 
+            color: #ffffff !important; 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+        }
+        
+        .nav-link { 
+            font-weight: 500; 
+            color: rgba(255, 255, 255, 0.9) !important; 
+            transition: 0.3s;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            color: var(--accent-gold) !important;
+        }
+        
+        .navbar-logo{
+            height: 40px;   /* ubah sesuai selera */
+            width: auto;
+        }
+
+
+        /* --------------------- */
+
+        #heroCarousel .carousel-item { 
+            height: 90vh; 
+            min-height: 500px; 
+            position: relative; 
+        }
+        
+        #testiSlider .carousel-item {
+            height: auto !important;
+            min-height: auto !important;
+        }
+
+        .carousel-item img { 
+            height: 100%; 
+            object-fit: cover; 
+            filter: brightness(0.4); 
+            animation: kenburns 20s infinite alternate;
+        }
+
+        @keyframes kenburns {
+            from { transform: scale(1); }
+            to { transform: scale(1.15); }
+        }
+
+        .hero-content { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; width: 85%; color: white; z-index: 2; }
+        .hero-title { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 700; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); margin-bottom: 1rem; }
+
+        /* Stats */
+        .stats-section { background-color: var(--primary-green); color: white; padding: 3rem 0; margin-top: -50px; position: relative; z-index: 10; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .stat-item h3 { font-size: 2.5rem; color: var(--accent-gold); }
+
+        /* Program Cards */
+        .program-card { background-color: var(--bg-card); border: none; border-radius: 15px; overflow: hidden; transition: 0.4s; height: 100%; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .program-card:hover { transform: translateY(-10px); border-bottom: 5px solid var(--accent-gold); }
+        .program-card img { height: 200px; object-fit: cover; }
+        .card-title-custom { color: var(--primary-green); font-weight: 700; }
+        
+        /* --- ALUMNI CARD UPDATE (LOGOS) --- */
+        .alumni-card { 
+            background-color: var(--bg-card); 
+            border: 1px solid rgba(0,0,0,0.05); 
+            border-radius: 15px; 
+            padding: 25px 15px; 
+            text-align: center; 
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            height: 100%; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        }
+        
+        .alumni-card:hover { 
+            transform: translateY(-8px); 
+            border-color: var(--accent-gold); 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
+        }
+
+        /* Style khusus untuk Logo Universitas */
+        .alumni-logo {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+            margin-bottom: 15px;
+            filter: grayscale(100%) opacity(0.7); /* Efek hitam putih */
+            transition: all 0.4s ease;
+        }
+
+        /* Saat di hover, logo jadi berwarna */
+        .alumni-card:hover .alumni-logo {
+            filter: grayscale(0%) opacity(1);
+            transform: scale(1.1);
+        }
+
+        .alumni-uni { font-weight: 700; font-size: 1rem; color: var(--primary-green); margin-bottom: 4px; }
+        .alumni-loc { font-size: 0.8rem; color: var(--text-muted); }
+        /* ---------------------------------- */
+
+        /* Testimonials */
+        .testi-section { 
+            background-color: var(--bg-light); 
+            padding-top: 3rem; 
+            padding-bottom: 0; 
+            margin-bottom: 0; 
+        }
+        
+        .testi-card-slim { 
+            background: var(--bg-card); 
+            padding: 25px; 
+            border-radius: 15px; 
+            margin: 0 auto 10px auto; 
+            max-width: 600px; 
+            text-align: center; 
+            border-left: 5px solid var(--primary-green); 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05); 
+        }
+        
+        .testi-content { font-style: italic; font-size: 0.95rem; margin-bottom: 10px; }
+        .testi-user { font-weight: 700; color: var(--accent-gold); font-size: 0.9rem; }
+
+        /* Gallery */
+        .galeri-section { padding: 3rem 0; }
+        .galeri-grid img { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 8px; transition: 0.3s; cursor: pointer; }
+        .galeri-grid img:hover { transform: scale(1.05); filter: brightness(0.8); }
+
+        /* Utils */
+        .btn-gold { background-color: var(--accent-gold); color: #000; font-weight: 600; border-radius: 50px; padding: 12px 30px; border: none; transition: 0.3s; }
+        .btn-gold:hover { background-color: #f1c40f; transform: scale(1.05); }
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        .section-title { font-weight: 700; margin-bottom: 1rem; }
+        .divider-custom { height: 3px; width: 60px; background: var(--accent-gold); margin: 0 auto 2rem auto; }
+
+        footer { background-color: #0b1e13; color: #adb5bd; padding: 3rem 0 1.5rem; border-top: 5px solid var(--accent-gold); }
+        footer a { color: #adb5bd; text-decoration: none; transition: 0.3s; }
+        footer a:hover { color: var(--accent-gold); padding-left: 5px; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="ChatGPT Image Feb 12, 2026, 10_11_06 AM.png" alt="Logo Al-Firdaus" class="navbar-logo">
+                <span class="ms-2">PP Al-Firdaus</span>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link active" href="#">Beranda</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#profil">Profil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#program">Program</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#galeri">Galeri</a></li>
+                    <li class="nav-item ms-lg-3"><a href="#daftar" class="btn btn-gold btn-sm">PSB Online</a></li>
+                    </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="https://mondokyuk.id/storage/uploads/16112024-oWoUt2MSJAqM1smNwAk5N2yd5qZhjHdrDlVg5WOw.jpg" class="d-block w-100" alt="Ma'had">
+                <div class="hero-content">
+                    <h1 class="hero-title">Pondok Pesantren Al-Firdaus</h1>
+                    <p class="lead mb-4">Membentuk Generasi Qur'ani yang Berakhlak Mulia.</p>
+                    <a href="#program" class="btn btn-gold">Pelajari Program</a>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="https://images.unsplash.com/photo-1623314359092-c8c528fab644?q=80&w=1631&auto=format&fit=crop" class="d-block w-100" alt="Kitab">
+                <div class="hero-content">
+                    <h1 class="hero-title">Kajian Kitab Kuning</h1>
+                    <p class="lead mb-3">Melestarikan Tradisi Salaf dengan Metode Modern.</p>
+                    <a href="#daftar" class="btn btn-outline-light btn-lg rounded-pill px-5">Daftar Sekarang</a>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="https://proditp.unismuh.ac.id/wp-content/uploads/2023/01/Lab-Komputer-SMP-Negeri-12-Binjai-Gambar-Ilustrasi-768x439.jpg" class="d-block w-100" alt="Teknologi">
+                <div class="hero-content">
+                    <h1 class="hero-title">Integrasi Teknologi</h1>
+                    <p class="lead mb-4">Siap Bersaing di Era Digital Tanpa Kehilangan Jati Diri Santri.</p>
+                    <a href="#profil" class="btn btn-gold">Lihat Fasilitas</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="stats-section reveal">
+            <div class="row text-center g-4">
+                <div class="col-md-4 border-md-end">
+                    <div class="stat-item">
+                        <h3 class="counter" data-target="500">0</h3>
+                        <p class="mb-0">Santri Aktif</p>
+                    </div>
+                </div>
+                <div class="col-md-4 border-md-end">
+                    <div class="stat-item">
+                        <h3 class="counter" data-target="52">0</h3>
+                        <p class="mb-0">Ustadz & Pengajar</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="stat-item">
+                        <h3 class="counter" data-target="3500">0</h3>
+                        <p class="mb-0">Alumni</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section id="profil" class="py-5 mt-5 reveal">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-5 mb-4">
+                    <img src="mufid-majnun-JQ5ZT-MEppc-unsplash.jpg" class="img-fluid rounded shadow-lg" style="border-left: 10px solid var(--accent-gold);" alt="Kyai">
+                </div>
+                <div class="col-md-7 ps-md-5">
+                    <h6 class="text-success fw-bold">Khadimul Ma'had</h6>
+                    <h2 class="mb-4">KH. Ahmad Dahlan, Lc., MA.</h2>
+                    <p class="lead fst-italic">"Di sini, santri dididik untuk memiliki kedalaman spiritual seluas samudera dan kecerdasan intelektual setinggi langit."</p>
+                    <p>Al-Firdaus hadir untuk menjawab tantangan zaman. Kami tidak hanya mengajarkan cara membaca kitab, tapi cara membaca masa depan dengan kacamata iman.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="program" class="py-5 reveal">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Program Unggulan</h2>
+                <div class="divider-custom"></div>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card program-card">
+                        <img src="Attin_rijan.jpg" alt="Diniyah">
+                        <div class="card-body">
+                            <h4 class="card-title-custom">Madrasah Diniyah</h4>
+                            <p class="text-muted small">Kajian Kitab Kuning komprehensif mulai dari tingkat dasar hingga tinggi.</p>
+                            <ul class="list-unstyled small">
+                                <li><i class="bi bi-check2-circle text-success me-2"></i>Nahwu & Shorof</li>
+                                <li><i class="bi bi-check2-circle text-success me-2"></i>Fiqih Perbandingan</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card program-card">
+                        <img src="iqro'.jpg" alt="Tahfidz">
+                        <div class="card-body">
+                            <h4 class="card-title-custom">Tahfidzul Qur'an</h4>
+                            <p class="text-muted small">Program akselerasi hafalan 30 Juz dengan metode mutqin dan bersanad.</p>
+                            <ul class="list-unstyled small">
+                                <li><i class="bi bi-check2-circle text-success me-2"></i>Setoran Harian</li>
+                                <li><i class="bi bi-check2-circle text-success me-2"></i>Sima'an Umum</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card program-card">
+                        <img src="educational.jpg" alt="Formal">
+                        <div class="card-body">
+                            <h4 class="card-title-custom">Pendidikan Formal</h4>
+                            <p class="text-muted small">SMP & SMA IT dengan kurikulum nasional dan penguasaan teknologi digital.</p>
+                            <ul class="list-unstyled small">
+                                <li><i class="bi bi-check2-circle text-success me-2"></i>Lab Komputer</li>
+                                <li><i class="bi bi-check2-circle text-success me-2"></i>Coding Class</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5 bg-light reveal">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Jejak Langkah Alumni</h2>
+                <div class="divider-custom"></div>
+                <p class="text-muted">Alumni kami tersebar di berbagai institusi pendidikan terbaik di dalam dan luar negeri.</p>
+            </div>
+            
+            <div class="row g-3 justify-content-center">
+                <div class="col-6 col-md-3">
+                    <div class="alumni-card">
+                        <img src="Feb 12, 2026, 09_12_51 AM.png" alt="Al Azhar" class="alumni-logo">
+                        <div class="alumni-uni">Univ. Al-Azhar</div>
+                        <div class="alumni-loc">Kairo, Mesir</div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="alumni-card">
+                        <img src="ChatGPT Image Feb 12, 2026, 09_25_40 AM.png" alt="Madinah" class="alumni-logo">
+                        <div class="alumni-uni">Univ. Islam Madinah</div>
+                        <div class="alumni-loc">Madinah, KSA</div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="alumni-card">
+                        <img src="ahgaff.png" alt="Al Ahgaff" class="alumni-logo">
+                        <div class="alumni-uni">Univ. Al-Ahgaff</div>
+                        <div class="alumni-loc">Tarim, Yaman</div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="alumni-card">
+                        <img src="Logolipia.png" alt="LIPIA" class="alumni-logo">
+                        <div class="alumni-uni">LIPIA</div>
+                        <div class="alumni-loc">Jakarta</div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="alumni-card">
+                        <img src="3bbd4b10bbf4b5311a962164512989ba.png" alt="UI" class="alumni-logo">
+                        <div class="alumni-uni">Univ. Indonesia</div>
+                        <div class="alumni-loc">Depok</div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="alumni-card">
+                        <img src="88b66cb6c261ee05c84f0b6ae1790cee.png" alt="ITB" class="alumni-logo">
+                        <div class="alumni-uni">ITB</div>
+                        <div class="alumni-loc">Bandung</div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="alumni-card">
+                        <img src="3cb9c695d329f017c1496dfae653d144.png" alt="UGM" class="alumni-logo">
+                        <div class="alumni-uni">UGM</div>
+                        <div class="alumni-loc">Yogyakarta</div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="alumni-card">
+                        <img src="UIN Sunan Kalijaga Logo (PNG720p) - Vector69Com.png" alt="UIN" class="alumni-logo">
+                        <div class="alumni-uni">UIN Sunan Kalijaga</div>
+                        <div class="alumni-loc">Yogyakarta</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testi-section reveal">
+        <div class="container">
+            <h3 class="text-center fw-bold mb-3">Apa Kata Mereka?</h3>
+            <div id="testiSlider" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="testi-card-slim">
+                            <p class="testi-content">"Akhlak anak saya berubah jadi sangat santun setelah mondok di sini. Sangat bersyukur."</p>
+                            <span class="testi-user">Ibu Siti - Wali Santri</span>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="testi-card-slim">
+                            <p class="testi-content">"Fasilitas lengkap dan ustadznya sangat membimbing. Cocok untuk menghafal Al-Qur'an."</p>
+                            <span class="testi-user">Bapak Ahmad - Wali Santri</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-2 pb-3">
+                    <button class="btn btn-sm btn-outline-success mx-1 rounded-circle" data-bs-target="#testiSlider" data-bs-slide="prev"><i class="bi bi-chevron-left"></i></button>
+                    <button class="btn btn-sm btn-outline-success mx-1 rounded-circle" data-bs-target="#testiSlider" data-bs-slide="next"><i class="bi bi-chevron-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="galeri" class="container galeri-section reveal">
+        <h4 class="text-center fw-bold mb-3">Galeri Kegiatan</h4>
+        <div class="row g-2 galeri-grid">
+            <div class="col-4 col-md-2"><img src="https://gontor.ac.id/wp-content/uploads/2025/09/WhatsApp-Image-2025-09-29-at-13.23.03-3-1068x712.jpeg" alt="G1"></div>
+            <div class="col-4 col-md-2"><img src="https://fajarcirebon.com/wp-content/uploads/2021/04/9-HL-Santri-Ponpes-Assalafiyah-Mengaji-Seharian.jpg" alt="G2"></div>
+            <div class="col-4 col-md-2"><img src="https://blue.kumparan.com/image/upload/fl_progressive,fl_lossy,c_fill,f_auto,q_auto:best,w_640/v1621748346/mjeib0sps3filu0kbo0x.jpg" alt="G3"></div>
+            <div class="col-4 col-md-2"><img src="https://portalmadura.com/wp-content/uploads/2021/06/Berikut-Fakta-Menarik-Santri-Pondok-Pesantren-Modern-Gontor.jpg" alt="G4"></div>
+            <div class="col-4 col-md-2"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMFHH8MyMM4JeX3EGRssgdBjbFADKkPpIy-w&s" alt="G5"></div>
+            <div class="col-4 col-md-2"><img src="https://blue.kumparan.com/image/upload/fl_progressive,fl_lossy,c_fill,f_auto,q_auto:best,w_640/v1634025439/01k82ynert1av4rqwtxc6khmtv.jpg" alt="G6"></div>
+        </div>
+    </section>
+
+    <section id="daftar" class="py-5 bg-success text-white text-center" style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1590076215667-875d45296e62?w=1200') center/cover fixed;">
+        <div class="container py-4">
+            <h2 class="mb-3">Penerimaan Santri Baru 2024/2025</h2>
+            <p class="lead mb-4">Mari bergabung menjadi bagian dari keluarga besar Al-Hidayah.</p>
+            <div class="d-flex justify-content-center gap-3 flex-wrap">
+                <button class="btn btn-gold btn-lg px-5">Daftar Sekarang</button>
+                <button class="btn btn-outline-light btn-lg px-5">Download Brosur</button>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="row gy-4">
+                <div class="col-lg-4">
+                    <h4 class="text-white mb-3">Ponpes Al-Hidayah</h4>
+                    <p>Mencetak generasi santri yang intelek, religius, dan siap berkontribusi bagi peradaban dunia.</p>
+                    <div class="d-flex gap-3 fs-5">
+                        <a href="#"><i class="bi bi-instagram"></i></a>
+                        <a href="#"><i class="bi bi-youtube"></i></a>
+                        <a href="#"><i class="bi bi-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-lg-center">
+                    <h5 class="text-white mb-3">Tautan Cepat</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#profil">Tentang Kami</a></li>
+                        <li><a href="#program">Program Pendidikan</a></li>
+                        <li><a href="#daftar">Pendaftaran</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="text-white mb-3">Kontak</h5>
+                    <p class="small mb-1"><i class="bi bi-geo-alt me-2"></i>Jl. Pesantren No. 99, Sleman, Yogyakarta</p>
+                    <p class="small mb-1"><i class="bi bi-telephone me-2"></i>(0274) 888-999</p>
+                </div>
+            </div>
+            <div class="border-top border-secondary mt-5 pt-3 text-center">
+                <small>&copy; 2024 Pondok Pesantren Al-Hidayah. All Rights Reserved.</small>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('.navbar');
+            nav.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // Reveal Animations
+        const reveals = document.querySelectorAll('.reveal');
+        const revealOnScroll = () => {
+            reveals.forEach(el => {
+                const windowHeight = window.innerHeight;
+                const elementTop = el.getBoundingClientRect().top;
+                if (elementTop < windowHeight - 100) el.classList.add('active');
+            });
+        };
+        window.addEventListener('scroll', revealOnScroll);
+        revealOnScroll();
+
+        // Stats Counter
+        const counters = document.querySelectorAll('.counter');
+        let started = false;
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300 && !started) {
+                counters.forEach(counter => {
+                    const target = +counter.getAttribute('data-target');
+                    const updateCount = () => {
+                        const count = +counter.innerText;
+                        const inc = target / 100;
+                        if (count < target) {
+                            counter.innerText = Math.ceil(count + inc);
+                            setTimeout(updateCount, 20);
+                        } else {
+                            counter.innerText = target;
+                        }
+                    };
+                    updateCount();
+                });
+                started = true;
+            }
+        });
+        
+        // SCRIPT TEMA DIHAPUS
+    </script>
+</body>
+</html>
